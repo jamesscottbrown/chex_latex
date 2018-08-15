@@ -682,8 +682,8 @@ sub READCODEFILE
 			}
 
 			# This doesn't actually work, though I wish it would - I want to detect a "true" right-leaning apostrophe
-			#if( !$ok && $theline =~ /\’/ ) {
-			#	print "SERIOUS: the special right-leaning apostrophe '’' should be a normal apostrophe on line $. in $input.\n";
+			#if( !$ok && $theline =~ /\Â’/ ) {
+			#	print "SERIOUS: the special right-leaning apostrophe 'Â’' should be a normal apostrophe on line $. in $input.\n";
 			#}
 			# https://www.grammarly.com/blog/modeling-or-modelling/
 			if( !$ok && $lctheline =~ /modelling/ && !$isref ) {
@@ -796,8 +796,8 @@ sub READCODEFILE
 		#}
 
 		# Latex-specific
-		if( !$ok && !$textonly && $theline =~ /’/ ) {
-			print "SERIOUS: the punctuation ’ should change to a ' (vertical) apostrophe on line $. in $input.\n";
+		if( !$ok && !$textonly && $theline =~ /Â’/ ) {
+			print "SERIOUS: the punctuation Â’ should change to a ' (vertical) apostrophe on line $. in $input.\n";
 		}
 		if( !$ok && !$textonly && !$inequation && $theline =~ /"/ && !($theline =~ /\\"/) ) {
 			print "SERIOUS: the double apostrophe \" should change to a \'\' on line $. in $input.\n";
@@ -890,7 +890,7 @@ sub READCODEFILE
 		if( !$ok && $theline =~ /TODO/ ) {
 			print "Beware, there is a TODO in the text itself at line $. in $input.\n";
 		}
-		if( !$twook && $twoline =~ /\. [a-z]/ && !($twoline =~ /a\.k\.a\./) && !$isref && !$inequation && !$period_problem ) {
+		if( !$twook && $twoline =~ /[^\\]\. [a-z]/ && !($twoline =~ /a\.k\.a\./) && !$isref && !$inequation && !$period_problem ) {
 			printf "Not capitalized at start of sentence%s, on line $. in $input.\n", $textonly ? "" : "(or the period should have a \\ before it)";
 		}
 		if( !$ok && $theline =~ /Javascript/) {
